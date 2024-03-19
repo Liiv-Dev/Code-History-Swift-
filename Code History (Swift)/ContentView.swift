@@ -12,6 +12,12 @@ struct ContentView: View {
     let mainColor = Color(red: 20/255, green: 28/255, blue: 58/255)
     let accentColor = Color(red: 48/255, green: 105/255, blue: 240/255)
     
+    let question = Question(
+        questionText:"What was the first computer bug?",
+        possibleAnswers: ["Ant", "Beetle", "Moth", "Fly"],
+        correctAnswerIndex: 2
+    )
+    
     var body: some View {
         ZStack{
             mainColor.ignoresSafeArea()
@@ -20,14 +26,37 @@ struct ContentView: View {
                     .font(.callout)
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                     .padding()
-                Text("What was the first computer bug?")
+                Text(question.questionText)
                     .font(.largeTitle)
                     .bold()
                     .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
                 Spacer()
                 
                 HStack {
-                    
+                    Button(action: {
+                        print("Tapped on Choice 1")
+                    },
+                        label: {
+                        ChoiceTextView(choiceText: question.possibleAnswers[0])
+                    })
+                    Button(action: {
+                        print("Tapped on Choice 2")
+                    },
+                        label: {
+                        ChoiceTextView(choiceText: question.possibleAnswers[1])
+                    })
+                    Button(action: {
+                        print("Tapped on Choice 3")
+                    },
+                        label: {
+                        ChoiceTextView(choiceText: question.possibleAnswers[2])
+                    })
+                    Button(action: {
+                        print("Tapped on Choice 4")
+                    },
+                        label: {
+                        ChoiceTextView(choiceText: question.possibleAnswers[3])
+                    })
                 }
             }
         }
