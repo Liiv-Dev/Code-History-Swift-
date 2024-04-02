@@ -9,9 +9,7 @@ import SwiftUI
 
 struct GameView: View {
     
-    @State var mainColor = Color(red: 20/255, green: 28/255, blue: 58/255)
-    let accentColor = Color(red: 48/255, green: 105/255, blue: 240/255)
-    
+    @State private var backgroundColor: Color = GameColor.main
     let question = Question(
         questionText:"What was the first computer bug?",
         possibleAnswers: ["Ant", "Beetle", "Moth", "Fly"],
@@ -20,7 +18,7 @@ struct GameView: View {
     
     var body: some View {
         ZStack{
-            mainColor.ignoresSafeArea()
+            backgroundColor.ignoresSafeArea()
             VStack {
                 Text("1/10")
                     .font(.callout)
@@ -36,7 +34,7 @@ struct GameView: View {
                   ForEach(0..<question.possibleAnswers.count) { answerIndex in
                     Button(action: {
                         print("Tapped on option with the text: \(question.possibleAnswers[answerIndex])")
-                        mainColor = answerIndex == question.correctAnswerIndex ? .green : .red
+                        backgroundColor = answerIndex == question.correctAnswerIndex ? .green : .red
                     }) {
                       ChoiceTextView(choiceText: question.possibleAnswers[answerIndex])
                     }
