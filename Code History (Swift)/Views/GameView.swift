@@ -8,44 +8,28 @@
 import SwiftUI
 
 struct GameView: View {
-    
-    @State private var backgroundColor: Color = GameColor.main
-    let question = Question(
-        questionText:"What was the first computer bug?",
-        possibleAnswers: ["Ant", "Beetle", "Moth", "Fly"],
-        correctAnswerIndex: 2
-    )
+    @StateObject var viewModel = GameViewModel()
     
     var body: some View {
-        ZStack{
-            backgroundColor.ignoresSafeArea()
+        ZStack {
+            GameColor.main.ignoresSafeArea()
             VStack {
-                Text("1/10")
+                Text(viewModel.questionProgressText)
                     .font(.callout)
-                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
+                    .multilineTextAlignment(.leading)
                     .padding()
-                Text(question.questionText)
-                    .font(.largeTitle)
-                    .bold()
-                    .multilineTextAlignment(/*@START_MENU_TOKEN@*/.leading/*@END_MENU_TOKEN@*/)
-                Spacer()
-                
-                HStack {
-                  ForEach(0..<question.possibleAnswers.count) { answerIndex in
-                    Button(action: {
-                        print("Tapped on option with the text: \(question.possibleAnswers[answerIndex])")
-                        backgroundColor = answerIndex == question.correctAnswerIndex ? .green : .red
-                    }) {
-                      ChoiceTextView(choiceText: question.possibleAnswers[answerIndex])
-                    }
-                  }
-                }
+                QuestionView(question: viewModel.currentQuestion)
             }
+            .foregroundColor(.white)
+            .navigationBarHidden(true)
+            .environmentObject(viewModel)
         }
-        .foregroundColor(.white)
     }
 }
 
-#Preview {
-    GameView()
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        GameView()
+    }
 }
